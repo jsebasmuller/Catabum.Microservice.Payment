@@ -9,7 +9,7 @@ using Catabum.Payment.Infrastructure.Models;
 
 namespace Catabum.Payment.Infrastructure
 {
-    public class PaymentsContext : IdentityDbContext<ApplicationPayment>, IUnitOfWork
+    public class PaymentsContext : DbContext, IUnitOfWork
     {
         private readonly IConfiguration _configuration;
         
