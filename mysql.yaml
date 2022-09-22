@@ -1,0 +1,15 @@
+apiVersion: mysql.presslabs.org/v1alpha1
+kind: MysqlCluster
+metadata:
+  name: payment-cluster
+spec:
+  replicas: 1
+  secretName: mysql-payment-secret
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-payment-secret
+type: Opaque
+data:
+  ROOT_PASSWORD: ZGV2ZWxvcGFmaWFuc2EyMDIqLgo=

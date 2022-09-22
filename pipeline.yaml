@@ -1,0 +1,49 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: movet-user-cicd
+spec:
+
+  serviceAccountName: tekton-pipelines
+
+  pipelineRef:
+    name: movet-cicd
+
+  workspaces:
+    - name: shared-workspace
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+
+  params:
+    # git params
+    - name: repo-url
+      value: ssh://APKARC2VFMSWTOP72NHJ@git-codecommit.us-east-1.amazonaws.com/v1/repos/Movet.User.Service
+    - name: branch-name
+      value: develop
+
+    # helm params
+    - name: values_path
+      value: repo/.docker/envs/prod.yaml
+    - name: charts_dir
+      value: repo/.docker/movet-user
+    - name: values_path
+      value: repo/.docker/envs/develop.yaml
+    - name: release_version
+      value: v1.0.0
+    - name: release_namespace
+      value: movet-micros
+    - name: release_name
+      value: movet-user
+
+    # docker params
+    - name: IMAGE
+      value: 074803668141.dkr.ecr.us-west-2.amazonaws.com/movet-user
+    - name: CONTEXT
+      value: "repo/"
+    - name: DOCKERFILE
+      value: "$(workspaces.source.path)/repo/.docker/Dockerfile"
