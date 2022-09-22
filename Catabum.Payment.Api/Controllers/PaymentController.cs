@@ -13,11 +13,11 @@ namespace Catabum.Payment.Api.Controllers.v1
     [ApiController()]
     [Route(PaymentConstants.ContextPath + "payment")]
     [ApiVersion("1.0")]
-    public class FaqsController : Controller
+    public class PaymentController : Controller
     {
         private readonly IMediator _mediator;
 
-        public FaqsController(IMediator mediator)
+        public PaymentController(IMediator mediator)
         {
             _mediator = mediator;
         }
